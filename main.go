@@ -6,11 +6,13 @@ import (
 	"os"
 	"strings"
 
-	"awesomeProject/dictionary"
+	"goProject/dictionary"
 )
 
+const filePath = "dictionary.txt"
+
 func main() {
-	d := dictionary.New()
+	d := dictionary.New(filePath)
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
@@ -58,7 +60,12 @@ func actionAdd(d *dictionary.Dictionary, reader *bufio.Reader) {
 	}
 	definition = strings.TrimSpace(definition)
 
-	d.Add(word, definition)
+	err = d.Add(word, definition)
+	if err != nil {
+		fmt.Println("Error adding word:", err)
+		return
+	}
+
 	fmt.Printf("Word '%s' added to the dictionary.\n", word)
 }
 
@@ -89,12 +96,22 @@ func actionRemove(d *dictionary.Dictionary, reader *bufio.Reader) {
 	}
 	word = strings.TrimSpace(word)
 
-	d.Remove(word)
+	err = d.Remove(word)
+	if err != nil {
+		fmt.Println("Error removing word:", err)
+		return
+	}
+
 	fmt.Printf("Word '%s' removed from the dictionary.\n", word)
 }
 
 func actionList(d *dictionary.Dictionary) {
-	words, entries := d.List()
+	words, entries, err := d.List()
+	if err != nil {
+		fmt.Println("Error listing words:", err)
+		return
+	}
+
 	fmt.Println("Words in the dictionary:")
 	for _, word := range words {
 		fmt.Printf("%s: %s\n", word, entries[word].String())
