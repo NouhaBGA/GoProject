@@ -21,6 +21,7 @@ type Dictionary struct {
 
 func New(filePath string) *Dictionary {
 	return &Dictionary{
+
 		filePath: filePath,
 	}
 }
