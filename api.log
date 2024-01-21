@@ -1,0 +1,8 @@
+[2024-01-21 22:30:45] GET /add/Test/Go Project 268.7µs
+[2024-01-21 22:31:31] GET /add/Another test/Go Project Middelware 68.3µs
+[2024-01-21 22:31:47] GET /get/Test 328.7µs
+[2024-01-21 22:31:55] GET /get/Another test 97µs
+[2024-01-21 22:32:01] GET /get/Another 104.3µs
+[2024-01-21 22:32:08] GET /get/Nouha 273.5µs
+[2024-01-21 22:32:21] GET /add/Hi/Go 620.8µs
+[2024-01-21 22:32:29] DELETE /remove/Hi 607.6µs
