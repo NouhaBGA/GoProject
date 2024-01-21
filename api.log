@@ -6,3 +6,14 @@
 [2024-01-21 22:32:08] GET /get/Nouha 273.5µs
 [2024-01-21 22:32:21] GET /add/Hi/Go 620.8µs
 [2024-01-21 22:32:29] DELETE /remove/Hi 607.6µs
+[2024-01-21 22:52:32] GET /get/Nouha 14.3687ms
+[2024-01-21 22:52:54] GET /get/Nouha 0s
+[2024-01-21 23:00:17] GET /get/Nouha 0s
+[2024-01-21 23:03:18] GET /get/Nouha 0s
+[2024-01-21 23:05:41] GET /get/Nouha 191.5µs
+[2024-01-21 23:06:14] GET /add/Hi/Go 511.2µs
+[2024-01-21 23:06:22] GET /get/Hi 251.4µs
+[2024-01-21 23:06:25] DELETE /remove/Hi 1.3507ms
+[2024-01-21 23:06:49] GET /add/Module/Go 1.4078ms
+[2024-01-21 23:06:58] GET /get/Module 173.2µs
+[2024-01-21 23:07:02] DELETE /remove/Module 230.8µs

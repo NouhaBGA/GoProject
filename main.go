@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"os"
 	"sync"
+	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 
 	"goProject/dictionary"
@@ -14,7 +16,36 @@ import (
 
 const filePath = "dictionary.txt"
 
+var mySigningKey = []byte("secret")
+
+func generateJWT() (string, error) {
+	token := jwt.New(jwt.SigningMethodHS256)
+
+	claims := token.Claims.(jwt.MapClaims)
+	claims["authorized"] = true
+	claims["user"] = "John Doe"
+	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
+
+	tokenString, err := token.SignedString(mySigningKey)
+
+	if err != nil {
+		fmt.Errorf("Something Went Wrong: %s", err.Error())
+		return "", err
+	}
+
+	return tokenString, nil
+}
+
 func main() {
+
+	fmt.Println("My Simple JWT Creation Program")
+	tokenString, err := generateJWT()
+	if err != nil {
+		fmt.Println("Error generating token string")
+	} else {
+		fmt.Println("Generated Token String: ", tokenString)
+	}
+
 	d := dictionary.New(filePath)
 	defer d.Close()
 
@@ -23,6 +54,9 @@ func main() {
 
 	// Add the logging middleware.
 	router.Use(middleware.LoggingMiddleware)
+
+	// Add the authentication middleware.
+	router.Use(middleware.AuthMiddleware)
 
 	var wg sync.WaitGroup
 
