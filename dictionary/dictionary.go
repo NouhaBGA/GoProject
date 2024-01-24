@@ -3,6 +3,7 @@ package dictionary
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"sync"
@@ -21,7 +22,7 @@ type Dictionary struct {
 	file     *os.File
 	addCh    chan entryOperation
 	removeCh chan entryOperation
-	lock     *sync.Mutex // Add the lock field.
+	lock     *sync.Mutex
 }
 
 type entryOperation struct {
@@ -47,6 +48,9 @@ func (d *Dictionary) start() {
 		select {
 		case addOp := <-d.addCh:
 			err := d.addToDictionary(addOp.word, addOp.definition)
+			if err != nil {
+				log.Printf("Error adding to dictionary: %v", err)
+			}
 			addOp.resultCh <- err
 
 		case removeOp := <-d.removeCh:
@@ -73,6 +77,12 @@ func (d *Dictionary) Add(word string, definition string) error {
 }
 
 func (d *Dictionary) Remove(word string) error {
+	// Check if word exists
+	_, err := d.Get(word)
+	if err != nil {
+		return fmt.Errorf("word '%s' does not exist in dictionary", word)
+	}
+
 	resultCh := make(chan error)
 	d.removeCh <- entryOperation{word, "", resultCh}
 	return <-resultCh
@@ -94,7 +104,7 @@ func (d *Dictionary) Get(word string) (Entry, error) {
 		}
 	}
 
-	return Entry{}, fmt.Errorf("word not found in the dictionary")
+	return Entry{}, fmt.Errorf("word '%s' not found in the dictionary. \n", word)
 }
 
 func (d *Dictionary) List() ([]string, map[string]Entry, error) {
@@ -126,6 +136,14 @@ func (d *Dictionary) List() ([]string, map[string]Entry, error) {
 }
 
 func (d *Dictionary) addToDictionary(word string, definition string) error {
+	// Validate word and definition
+	if len(word) < 1 || len(word) > 50 {
+		return fmt.Errorf("word must be between 1 and 50 characters")
+	}
+	if len(definition) < 1 || len(definition) > 200 {
+		return fmt.Errorf("definition must be between 1 and 200 characters")
+	}
+
 	// Locking to ensure exclusive access to the file.
 	d.lock.Lock()
 	defer d.lock.Unlock()
