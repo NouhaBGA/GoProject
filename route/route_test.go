@@ -1,24 +1,29 @@
 package route
 
 import (
+	"context"
 	"fmt"
-	"goProject/dictionary"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestIntegrationRoutes(t *testing.T) {
-	// Créez un dictionnaire pour les tests
-	d := dictionary.New("test_route.txt")
-	defer d.Close()
+	// Create a Redis client for testing
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "", // no password set
+		DB:       0,  // default DB
+	})
+	ctx := context.Background()
 
-	// Créez le routeur en utilisant le dictionnaire de test
-	router := NewRouter(d)
+	// Create the router using the test Redis client
+	router := NewRouter(rdb, ctx)
 
-	// Test d'ajout
+	// Test adding an entry
 	t.Run("AddEntry", func(t *testing.T) {
 		word := "testWord"
 		definition := "testDefinition"
@@ -34,7 +39,7 @@ func TestIntegrationRoutes(t *testing.T) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 	})
 
-	// Test de récupération
+	// Test getting a definition
 	t.Run("GetDefinition", func(t *testing.T) {
 		word := "testWord"
 		url := fmt.Sprintf("/get/%s", word)
@@ -50,7 +55,7 @@ func TestIntegrationRoutes(t *testing.T) {
 		assert.Contains(t, rec.Body.String(), "Definition of")
 	})
 
-	// Test de suppression
+	// Test removing an entry
 	t.Run("RemoveEntry", func(t *testing.T) {
 		word := "testWord"
 		url := fmt.Sprintf("/remove/%s", word)
@@ -64,5 +69,4 @@ func TestIntegrationRoutes(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, rec.Code)
 	})
-
 }
