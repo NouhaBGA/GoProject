@@ -49,8 +49,8 @@ func main() {
 	// Connect to Redis
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // default DB
+		Password: "",
+		DB:       0,
 	})
 
 	// Create a new router from Gorilla Mux.

@@ -112,3 +112,9 @@
 [2024-01-25 10:23:06] DELETE /remove/test my app 999.4µs
 [2024-01-25 10:23:39] POST /add/testapp/hello world 366.7µs
 [2024-01-25 10:23:59] GET /get/testapp 431.3µs
+[2024-01-25 10:49:30] POST /add/testappLI/hello world 13.4357ms
+[2024-01-25 10:49:44] POST /add/testappLI/hello world 953.3µs
+[2024-01-25 10:49:47] GET /get/testappLI 972.4µs
+[2024-01-25 10:49:50] DELETE /remove/testappLI 300.1µs
+[2024-01-25 10:50:16] DELETE /remove/testappLI 422.8µs
+[2024-01-25 10:50:18] DELETE /remove/testappLI 879.1µs

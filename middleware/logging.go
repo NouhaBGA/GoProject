@@ -21,7 +21,6 @@ func LoggingMiddleware(next http.Handler) http.Handler {
 		logMessage := fmt.Sprintf("[%s] %s %s %v", end.Format("2006-01-02 15:04:05"), r.Method, r.URL.Path, duration)
 		fmt.Println(logMessage)
 
-		// You can also log to a file if needed.
 		logToFile(logMessage)
 	})
 }

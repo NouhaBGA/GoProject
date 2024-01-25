@@ -20,8 +20,6 @@ func (e Entry) String() string {
 }
 
 type Dictionary struct {
-	// filePath string
-	// file     *os.File
 	client   *redis.Client
 	addCh    chan entryOperation
 	removeCh chan entryOperation
@@ -49,18 +47,6 @@ func New(addr string, password string, db int) *Dictionary {
 	}
 }
 
-// func New(filePath string) *Dictionary {
-// 	d := &Dictionary{
-// 		filePath: filePath,
-// 		addCh:    make(chan entryOperation),
-// 		removeCh: make(chan entryOperation),
-// 		lock:     &sync.Mutex{}, // Initialize the lock.
-// 	}
-
-// 	go d.start()
-// 	return d
-// }
-
 func (d *Dictionary) start() {
 	for {
 		select {
@@ -77,16 +63,6 @@ func (d *Dictionary) start() {
 		}
 	}
 }
-
-// func (d *Dictionary) Close() error {
-// 	if d.file != nil {
-// 		err := d.file.Close()
-// 		if err != nil {
-// 			return err
-// 		}
-// 	}
-// 	return nil
-// }
 
 func (d *Dictionary) Add(word string, definition string) error {
 	resultCh := make(chan error)

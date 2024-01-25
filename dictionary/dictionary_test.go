@@ -23,8 +23,8 @@ func TestAdd(t *testing.T) {
 	// Create a Redis client for testing
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: "",
+		DB:       0,
 	})
 	ctx := context.Background()
 
@@ -44,8 +44,8 @@ func TestGet(t *testing.T) {
 	// Create a Redis client for testing
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: "",
+		DB:       0,
 	})
 	ctx := context.Background()
 
@@ -75,8 +75,8 @@ func TestRemove(t *testing.T) {
 	// Create a Redis client for testing
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: "",
+		DB:       0,
 	})
 	ctx := context.Background()
 
@@ -93,7 +93,7 @@ func TestRemove(t *testing.T) {
 	}
 
 	// Test failure scenario - word not found
-	err = rdb.Del(ctx, "nonexistent_word").Err()
+	_, err = rdb.Get(ctx, "nonexistent_word").Result()
 	if err == nil {
 		t.Error("Expected error for nonexistent word, but got nil")
 	}
