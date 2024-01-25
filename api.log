@@ -104,3 +104,11 @@
 [2024-01-24 19:26:45] POST /add/test/hello 678.7µs
 [2024-01-24 19:27:00] GET /get/Moduleeeeeeeeeeeeeeeeee 722µs
 [2024-01-24 19:27:05] DELETE /remove/Moduleeeeeeeeeeeeeeeeee 668.6µs
+[2024-01-25 09:20:48] POST /add/test/hello 100.2637ms
+[2024-01-25 09:45:47] POST /add/test/hello 6.7548ms
+[2024-01-25 10:22:09] POST /add/test my app/hello world 8.1587ms
+[2024-01-25 10:22:34] POST /add/test my app/hello world 501.7µs
+[2024-01-25 10:22:58] GET /get/test my app 0s
+[2024-01-25 10:23:06] DELETE /remove/test my app 999.4µs
+[2024-01-25 10:23:39] POST /add/testapp/hello world 366.7µs
+[2024-01-25 10:23:59] GET /get/testapp 431.3µs
